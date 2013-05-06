@@ -1,0 +1,43 @@
+#!/bin/bash
+# Here do anything needed to install the service
+# i.e. apt-get install -y foo  or  bzr branch http://myserver/mycode /srv/webroot
+# Make sure this hook exits cleanly and is idempotent, common problems here are failing to account for a debconf question on a dependency, or trying to pull from github without installing git first.
+
+set -eux # -x for verbose logging to juju debug-log
+
+# Vars
+PASSWORD=$(config-get password)
+SETUP=$(config-get plonemode)
+
+juju-log "installing dependencies"
+
+apt-get install -y python-dev build-essential libssl-dev libxml2-dev libxslt1-dev libbz2-dev python-setuptools libjpeg62-dev libreadline-gplv2-dev wv poppler-utils python-imaging
+
+juju-log "create plone user"
+adduser ploneuser --disabled-login --gecos ""
+
+#juju-log "switch to plone user"
+#su ploneuser
+cd /home/ploneuser
+
+juju-log "download plone"
+su ploneuser -c 'wget --no-check-certificate https://launchpad.net/plone/4.3/4.3/+download/Plone-4.3-UnifiedInstaller.tgz'
+# Extract the downloaded file
+juju-log "Extract Plone"
+su ploneuser -c 'tar -xf Plone-4.3-UnifiedInstaller.tgz'
+# Go the folder containing installer script
+
+#juju-log "change perms to ploneuser"
+#chown -R ploneuser:ploneuser Plone-4.3-UnifiedInstaller
+cd Plone-4.3-UnifiedInstaller
+# Run script
+#./install.sh --password=plone standalone
+juju-log "su ploneuser and do install"
+su ploneuser -c './install.sh --password='$PASSWORD' '$SETUP''
+#juju-log "start plone"
+#cd Plone/zinstance
+#su ploneuser -c 'bin/instance start'
+
+
+# Make it publicly visible
+#open-port 8080/tcp

@@ -1,0 +1,11 @@
+options:
+  password:
+    type: string
+    default: "admin"
+    description: |
+      This sets the elasticsearch version number that will be used.
+  plonemode:
+    type: string
+    default: "standalone"
+    description: |
+      This sets the elasticsearch cluster name, which is used to discover and auto-join other nodes.
