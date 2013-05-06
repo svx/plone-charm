@@ -3,9 +3,9 @@ options:
     type: string
     default: "admin"
     description: |
-      This sets the elasticsearch version number that will be used.
+      This sets the password that will be used.
   plonemode:
     type: string
     default: "standalone"
     description: |
-      This sets the elasticsearch cluster name, which is used to discover and auto-join other nodes.
+      This sets the setup standalone vs zeo that will be used.
