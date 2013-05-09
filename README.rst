@@ -68,6 +68,8 @@ Now open a new browser and browse to $IP:8080 and have fun
 
 **Please note:**
 
+I only tested the $USER install of Plone, installing as root is not tested and I guess it will not work.
+
 This is really just a 'quick and dirty' proof of concept for now, there is plenty of room for tweaking and making things nice, even this readme needs some improvements and formating :)
 
 
